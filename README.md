@@ -1,0 +1,33 @@
+# wiznet-pico-basics
+
+WIZnet の Raspberry Pi Pico 互換ボード（W55RP20-EVB-Pico / W6300-EVB-Pico2）を LAN につなぐ「最初の一歩」のコードです。
+electwork.net の記事で使っているスケッチと PC 側のスクリプトを、そのまま置いています。
+
+| ディレクトリ | 内容 | ボード（Arduino IDE のボード名） |
+|:--|:--|:--|
+| `arduino/w55rp20-evb-pico/dhcp_tcp_echo/` | DHCP で IP を取り、MAC・IP を表示し、TCP 5000 番でエコーする | WIZnet W55RP20-EVB-Pico（arduino-pico 6.3.1） |
+| `arduino/w6300-evb-pico2/dhcp_tcp_echo_ipv6/` | 同じことを W6300 で行い、IPv6 リンクローカルアドレスも表示する | WIZnet W6300-EVB-Pico2（arduino-pico 6.3.1・IP/Bluetooth Stack = IPv4 + IPv6） |
+| `tools/tcp_echo_client.ps1` | PC（Windows PowerShell）から TCP 5000 番に 1 行送って、返ってくるまで読む | — |
+
+## 使い方（Arduino IDE）
+
+1. ボードマネージャに arduino-pico を入れる（追加の URL: `https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json`）
+2. ボードで上の名前を選び、スケッチを書き込む（USB をつなぐだけで書けます。書き込み後は COM 番号が変わります）
+3. シリアルモニタ（115200）に出た IP に、PC から `ping` と `tools/tcp_echo_client.ps1`（`$ip` を書き換える）
+
+arduino-cli なら `rp2040:rp2040:wiznet_55rp20_evb_pico` / `rp2040:rp2040:wiznet_6300_evb_pico2` です。
+
+## メモ
+
+- `loop()` の `delay(50)` は必要です。arduino-pico の有線 Ethernet は lwIP を 20 ms 周期のポーリングで動かしていて、`client.connected()` などを休みなく呼ぶループではその処理が走らず、相手の切断や ping に応えなくなります（W55RP20-EVB-Pico で実測）
+- PC 側は 1 回の `Read()` で全部返るとは限らないので、改行が来るまで読んでいます
+
+## 記事
+
+- W55RP20-EVB-Pico の基本（公開後にリンクを足します）
+- W6300-EVB-Pico2 の基本（同上）
+- Pico SDK ＋ VS Code 拡張の環境構築（同上）
+
+## License
+
+MIT
