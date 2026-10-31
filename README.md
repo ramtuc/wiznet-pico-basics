@@ -7,7 +7,7 @@ electwork.net の記事で使っているスケッチと PC 側のスクリプ�
 |:--|:--|:--|
 | `arduino/w55rp20-evb-pico/dhcp_tcp_echo/` | DHCP で IP を取り、MAC・IP を表示し、TCP 5000 番でエコーする | WIZnet W55RP20-EVB-Pico（arduino-pico 6.3.1） |
 | `arduino/w6300-evb-pico2/dhcp_tcp_echo_ipv6/` | 同じことを W6300 で行い、IPv6 リンクローカルアドレスも表示する | WIZnet W6300-EVB-Pico2（arduino-pico 6.3.1・IP/Bluetooth Stack = IPv4 + IPv6） |
-| `tools/tcp_echo_client.ps1` | PC（Windows PowerShell）から TCP 5000 番に 1 行送って、返ってくるまで読む | — |
+| `tools/tcp_echo_client.ps1` | PC（Windows PowerShell）から TCP 5000 番に 1 行送って、返ってくるまで読む。`.	cp_echo_client.ps1 192.168.x.x "hello W6300"` のように IP と文字列を引数で渡せる | — |
 
 ## 使い方（Arduino IDE）
 
